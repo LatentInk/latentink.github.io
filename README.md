@@ -12,7 +12,7 @@ A responsive blog for practical AI prompts, published with GitHub Pages.
 4. Set `draft: false` when ready, then commit to `main`.
 5. The **Publish Latent Ink** workflow builds and deploys the site automatically. Check the Actions tab for the result; publishing usually takes a minute or two.
 
-```markdown
+````markdown
 ---
 title: "Your article title"
 description: "A short description for the article card and search engines."
@@ -35,7 +35,7 @@ Your copyable prompt goes here.
 ## Make it your own
 
 Explain what readers should customize and how to evaluate the output.
-```
+````
 
 Set `image` to an integer from 0 to 29 to choose an illustration from the shared cover atlas. The thirty panels appear left to right, top to bottom in `src/covers.png`. Use a quoted `YYYY-MM-DD` date. Categories are created automatically. Drafts are excluded from the generated site, feed, and sitemap, but files committed to this public repository are publicly visible. Dates control article ordering; they do not schedule publication. To unpublish an article, set `draft: true` and commit.
 
