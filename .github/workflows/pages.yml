@@ -1,4 +1,4 @@
-name: Publish Tech Blade
+name: Publish Latent Ink
 on:
   push:
     branches: [main]

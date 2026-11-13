@@ -1,5 +1,5 @@
 {
-  "name": "tech-blade",
+  "name": "latent-ink",
   "version": "1.0.0",
   "description": "A practical journal for better AI prompts.",
   "scripts": {
@@ -8,16 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mannusharma23/tech-blade.git"
+    "url": "git+https://github.com/LatentInk/latentink.github.io.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/mannusharma23/tech-blade/issues"
+    "url": "https://github.com/LatentInk/latentink.github.io/issues"
   },
-  "homepage": "https://github.com/mannusharma23/tech-blade#readme",
+  "homepage": "https://github.com/LatentInk/latentink.github.io#readme",
   "dependencies": {
     "gray-matter": "^4.0.3",
     "marked": "^18.2.0"
