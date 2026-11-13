@@ -1,0 +1,29 @@
+{
+  "name": "tech-blade",
+  "version": "1.0.0",
+  "description": "A practical journal for better AI prompts.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mannusharma23/tech-blade.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/mannusharma23/tech-blade/issues"
+  },
+  "homepage": "https://github.com/mannusharma23/tech-blade#readme",
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^18.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0"
+  },
+  "private": true
+}
