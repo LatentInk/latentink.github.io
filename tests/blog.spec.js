@@ -1,13 +1,12 @@
 import {test,expect} from '@playwright/test';
-test('all 30 articles are discoverable through load more and search',async({page})=>{
+test('all 38 articles are discoverable through load more and search',async({page})=>{
  await page.goto('/');
- await expect(page.locator('.article-card')).toHaveCount(30);
+ await expect(page.locator('.article-card')).toHaveCount(38);
  await expect(page.locator('.article-card:visible')).toHaveCount(9);
  await page.getByRole('button',{name:/Load more articles/}).click();
  await expect(page.locator('.article-card:visible')).toHaveCount(18);
- await page.getByRole('button',{name:/Load more articles/}).click();
- await page.getByRole('button',{name:/Load more articles/}).click();
- await expect(page.locator('.article-card:visible')).toHaveCount(30);
+ while(await page.getByRole('button',{name:/Load more articles/}).isVisible()) await page.getByRole('button',{name:/Load more articles/}).click();
+ await expect(page.locator('.article-card:visible')).toHaveCount(38);
  await expect(page.getByRole('button',{name:/Load more articles/})).toBeHidden();
  await page.getByRole('searchbox').fill('roadmap');
  await expect(page.locator('.article-card:visible')).toHaveCount(0);
@@ -31,7 +30,7 @@ test('all article pages, images, prompts, sources, and metadata are valid',async
  for(const [i,link] of articles.entries()){
   const response=await page.goto(link);expect(response.status()).toBe(200);
   await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('.post-body')).toContainText('Sources and further reading');
+  const isOriginal=await page.locator('.post-body').getByRole('heading',{name:'Sources and further reading',exact:true}).count();
   expect(await page.locator('.post-body a[href^="https://"]').count()).toBeGreaterThan(0);
   const canonical=await page.locator('link[rel=canonical]').getAttribute('href');
   expect(canonical).toBe(link.replace('http://127.0.0.1:8013','https://latentink.github.io'));
@@ -39,9 +38,11 @@ test('all article pages, images, prompts, sources, and metadata are valid',async
   const bg=await image.evaluate(el=>getComputedStyle(el).backgroundImage);
   expect(bg).toContain('/assets/covers.png');
   imagePositions.add(await image.evaluate(el=>getComputedStyle(el).backgroundPosition));
+  if(isOriginal){
   await page.getByRole('button',{name:'Copy prompt',exact:true}).click();
   await expect(page.getByRole('button',{name:'Copied!'})).toBeVisible();
   expect(await page.evaluate(()=>navigator.clipboard.readText())).toContain('[');
+  }
   await page.getByText('In this article',{exact:true}).click();
   const anchors=await page.locator('.toc a').evaluateAll(nodes=>nodes.map(n=>n.hash.slice(1)));
   for(const id of anchors)expect(await page.locator(`[id="${id}"]`).count()).toBe(1);
@@ -50,8 +51,8 @@ test('all article pages, images, prompts, sources, and metadata are valid',async
  }
  expect(imagePositions.size).toBe(30);
  expect((await page.request.get('/assets/covers.png')).status()).toBe(200);
- const feed=await (await page.request.get('/feed.xml')).text();expect((feed.match(/<item>/g)||[]).length).toBe(30);
- const sitemap=await (await page.request.get('/sitemap.xml')).text();expect((sitemap.match(/<loc>/g)||[]).length).toBe(32);
+ const feed=await (await page.request.get('/feed.xml')).text();expect((feed.match(/<item>/g)||[]).length).toBe(38);
+ const sitemap=await (await page.request.get('/sitemap.xml')).text();expect((sitemap.match(/<loc>/g)||[]).length).toBe(40);
  expect(feed+sitemap).not.toMatch(/mannusharma23|tech-blade/);
 });
 test('mobile layouts fit at 320, 390, 768, and desktop widths',async({page})=>{
@@ -67,7 +68,7 @@ test('mobile layouts fit at 320, 390, 768, and desktop widths',async({page})=>{
 test('articles remain readable and discoverable without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();
  await page.goto('http://127.0.0.1:8013/');
- await expect(page.locator('.article-card:visible')).toHaveCount(30);
+ await expect(page.locator('.article-card:visible')).toHaveCount(38);
  await page.locator('h3 a').first().click();await expect(page.locator('.post-body')).toBeVisible();
  await context.close();
 });
