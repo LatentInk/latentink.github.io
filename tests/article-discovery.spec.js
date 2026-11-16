@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 test('article recommendations are latest-first, exclude current post, and work responsively',async({page})=>{
  await page.goto('/blog/');
  const all=await page.locator('.article-card h3 a').evaluateAll(nodes=>nodes.map(n=>({url:n.href,title:n.textContent})));
- for(const index of [0,7,44]){
+ for(const index of [0,7,all.length-1]){
   const current=all[index];
   await page.goto(current.url);
   const expected=all.filter(a=>a.url!==current.url);

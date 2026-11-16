@@ -15,9 +15,11 @@ for(const file of await readdir('posts')) {
  const slug=file.replace(/\.md$/,'');
  if(!/^[a-z0-9-]+$/.test(slug)) throw new Error(`Invalid slug: ${slug}`);
  const date=new Date(data.date); if(Number.isNaN(+date)) throw new Error(`Invalid date: ${file}`);
- posts.push({...data,date:date.toISOString().slice(0,10),slug,content,minutes:Math.max(1,Math.ceil(content.split(/\s+/).length/200))});
+ const publishedAt=new Date(data.published_at||date.toISOString());
+ if(Number.isNaN(+publishedAt))throw new Error(`${file}: invalid published_at`);
+ posts.push({...data,publishedAt:publishedAt.toISOString(),date:date.toISOString().slice(0,10),slug,content,minutes:Math.max(1,Math.ceil(content.split(/\s+/).length/200))});
 }
-posts.sort((a,b)=>b.date.localeCompare(a.date)||a.title.localeCompare(b.title));
+posts.sort((a,b)=>b.date.localeCompare(a.date)||b.publishedAt.localeCompare(a.publishedAt)||a.title.localeCompare(b.title));
 const url=p=>`${base}${p}`;
 const dateLabel=p=>new Date(p.date+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'});
 const categoryInfo={Updates:{label:'AI News',icon:'bolt',description:'Product updates and announcements'},Agents:{label:'AI Agents',icon:'layers',description:'Connected tools and automation'},Coding:{label:'AI Development',icon:'code',description:'Coding, evaluation, and workflows'},'Creative AI':{label:'Creative AI',icon:'spark',description:'Images, video, and creative tools'},Prompting:{label:'AI Guides',icon:'book',description:'Better prompts and practical how-tos'},Research:{label:'AI Research',icon:'search',description:'Evidence, insights, and analysis'}};

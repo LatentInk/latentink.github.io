@@ -37,7 +37,7 @@ Your copyable prompt goes here.
 Explain what readers should customize and how to evaluate the output.
 ````
 
-Set `image` to an integer from 0 to 29 to choose an illustration from the shared cover atlas. The thirty panels appear left to right, top to bottom in `src/covers.png`. Use a quoted `YYYY-MM-DD` date. Categories are created automatically. Drafts are excluded from the generated site, feed, and sitemap, but files committed to this public repository are publicly visible. Dates control article ordering; they do not schedule publication. To unpublish an article, set `draft: true` and commit.
+Set `image` to an integer from 0 to 29 to choose an illustration from the shared cover atlas. The thirty panels appear left to right, top to bottom in `src/covers.png`. Use a quoted `YYYY-MM-DD` date. Categories are created automatically. Drafts are excluded from the generated site, feed, and sitemap, but files committed to this public repository are publicly visible. Dates control article ordering; they do not schedule publication. For multiple publishing batches on the same date, add an ISO timestamp such as `published_at: "2026-11-16T17:37:29Z"` so newer posts appear ahead of older posts from that day. To unpublish an article, set `draft: true` and commit.
 
 ## Develop locally
 

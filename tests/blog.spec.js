@@ -1,12 +1,12 @@
 import {test,expect} from '@playwright/test';
-test('all 45 articles are discoverable through load more and search',async({page})=>{
+test('all 48 articles are discoverable through load more and search',async({page})=>{
  await page.goto('/');
- await expect(page.locator('.article-card')).toHaveCount(45);
+ await expect(page.locator('.article-card')).toHaveCount(48);
  await expect(page.locator('.article-card:visible')).toHaveCount(8);
  await page.getByRole('button',{name:/Load more articles/}).click();
  await expect(page.locator('.article-card:visible')).toHaveCount(16);
  while(await page.getByRole('button',{name:/Load more articles/}).isVisible()) await page.getByRole('button',{name:/Load more articles/}).click();
- await expect(page.locator('.article-card:visible')).toHaveCount(45);
+ await expect(page.locator('.article-card:visible')).toHaveCount(48);
  await expect(page.getByRole('button',{name:/Load more articles/})).toBeHidden();
  await page.getByRole('searchbox').fill('roadmap');
  await expect(page.locator('.article-card:visible')).toHaveCount(0);
@@ -51,8 +51,8 @@ test('all article pages, images, prompts, sources, and metadata are valid',async
  }
  expect(imagePositions.size).toBe(30);
  expect((await page.request.get('/assets/covers.png')).status()).toBe(200);
- const feed=await (await page.request.get('/feed.xml')).text();expect((feed.match(/<item>/g)||[]).length).toBe(45);
- const sitemap=await (await page.request.get('/sitemap.xml')).text();expect((sitemap.match(/<loc>/g)||[]).length).toBe(48);
+ const feed=await (await page.request.get('/feed.xml')).text();expect((feed.match(/<item>/g)||[]).length).toBe(48);
+ const sitemap=await (await page.request.get('/sitemap.xml')).text();expect((sitemap.match(/<loc>/g)||[]).length).toBe(51);
  expect(feed+sitemap).not.toMatch(/mannusharma23|tech-blade/);
 });
 test('mobile layouts fit at 320, 390, 768, and desktop widths',async({page})=>{
@@ -68,7 +68,7 @@ test('mobile layouts fit at 320, 390, 768, and desktop widths',async({page})=>{
 test('articles remain readable and discoverable without JavaScript',async({browser})=>{
  const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();
  await page.goto('http://127.0.0.1:8013/');
- await expect(page.locator('.article-card:visible')).toHaveCount(45);
+ await expect(page.locator('.article-card:visible')).toHaveCount(48);
  await page.locator('.article-card h3 a').first().click();await expect(page.locator('.post-body')).toBeVisible();
  await context.close();
 });
