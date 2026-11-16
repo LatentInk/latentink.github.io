@@ -3,7 +3,7 @@ title: "Longer AI Video Is Here: What Marketers Can Do With It"
 description: "Early AI video clips were short, often just a few seconds."
 date: "2026-11-14"
 category: "Creative AI"
-image: 17
+image: 13
 draft: false
 ---
 

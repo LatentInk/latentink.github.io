@@ -3,7 +3,7 @@ title: "Video Production Inside a Chat: A New Workflow for Busy Marketers"
 description: "Video takes longer than almost any other content format."
 date: "2026-11-14"
 category: "Creative AI"
-image: 17
+image: 10
 draft: false
 ---
 

@@ -3,7 +3,7 @@ title: "Do AI Actors Work for Video Ads? What to Check First"
 description: "Video ads featuring a person speaking to camera tend to feel more personal than polished brand spots."
 date: "2026-11-16"
 category: "Creative AI"
-image: 17
+image: 28
 draft: false
 ---
 

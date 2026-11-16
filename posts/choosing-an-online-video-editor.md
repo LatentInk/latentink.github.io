@@ -3,7 +3,7 @@ title: "Choosing an Online Video Editor Without Overpaying"
 description: "Video editing used to demand powerful computers and expensive software."
 date: "2026-11-16"
 category: "Creative AI"
-image: 17
+image: 6
 draft: false
 ---
 

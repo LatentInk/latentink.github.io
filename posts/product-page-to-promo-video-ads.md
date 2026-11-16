@@ -3,7 +3,7 @@ title: "From Product Page to Promo: Faster Video Ads for Online Stores"
 description: "Running an online store means constantly feeding the marketing machine."
 date: "2026-11-14"
 category: "Creative AI"
-image: 17
+image: 11
 draft: false
 ---
 

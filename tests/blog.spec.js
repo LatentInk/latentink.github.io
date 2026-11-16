@@ -2,9 +2,9 @@ import {test,expect} from '@playwright/test';
 test('all 45 articles are discoverable through load more and search',async({page})=>{
  await page.goto('/');
  await expect(page.locator('.article-card')).toHaveCount(45);
- await expect(page.locator('.article-card:visible')).toHaveCount(9);
+ await expect(page.locator('.article-card:visible')).toHaveCount(8);
  await page.getByRole('button',{name:/Load more articles/}).click();
- await expect(page.locator('.article-card:visible')).toHaveCount(18);
+ await expect(page.locator('.article-card:visible')).toHaveCount(16);
  while(await page.getByRole('button',{name:/Load more articles/}).isVisible()) await page.getByRole('button',{name:/Load more articles/}).click();
  await expect(page.locator('.article-card:visible')).toHaveCount(45);
  await expect(page.getByRole('button',{name:/Load more articles/})).toBeHidden();
@@ -19,13 +19,13 @@ test('all 45 articles are discoverable through load more and search',async({page
  await expect(page.getByText('No articles found.')).toBeVisible();
  await page.getByRole('searchbox').fill('');
  await page.getByRole('button',{name:/All articles/}).click();
- await expect(page.locator('.article-card:visible')).toHaveCount(9);
+ await expect(page.locator('.article-card:visible')).toHaveCount(8);
 });
 test('all article pages, images, prompts, sources, and metadata are valid',async({page,context})=>{
  test.setTimeout(60000);
  await context.grantPermissions(['clipboard-read','clipboard-write']);
  await page.goto('/');
- const articles=await page.locator('h3 a').evaluateAll(nodes=>nodes.map(n=>n.href));
+ const articles=await page.locator('.article-card h3 a').evaluateAll(nodes=>nodes.map(n=>n.href));
  const imagePositions=new Set();
  for(const [i,link] of articles.entries()){
   const response=await page.goto(link);expect(response.status()).toBe(200);
@@ -60,7 +60,7 @@ test('mobile layouts fit at 320, 390, 768, and desktop widths',async({page})=>{
   await page.setViewportSize({width,height:1000});await page.goto('/');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`home ${width}`).toBe(true);
   if(width===390||width===1440)await page.screenshot({path:`/workspace/latentink-${width}.png`,fullPage:true});
-  await page.locator('h3 a').first().click();
+  await page.locator('.article-card h3 a').first().click();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`article ${width}`).toBe(true);
   if(width===390)await page.screenshot({path:'/workspace/latentink-article-mobile.png',fullPage:true});
  }
@@ -69,12 +69,12 @@ test('articles remain readable and discoverable without JavaScript',async({brows
  const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();
  await page.goto('http://127.0.0.1:8013/');
  await expect(page.locator('.article-card:visible')).toHaveCount(45);
- await page.locator('h3 a').first().click();await expect(page.locator('.post-body')).toBeVisible();
+ await page.locator('.article-card h3 a').first().click();await expect(page.locator('.post-body')).toBeVisible();
  await context.close();
 });
 test('about, 404, and robots use the root site identity',async({page})=>{
  await page.goto('/about/');await expect(page.locator('main')).toContainText('AI assistance');
  await page.goto('/404.html');await page.getByRole('link',{name:/Back to the journal/}).click();
- await expect(page.locator('h1')).toHaveText('Fresh AI.Clear thinking.');
+ await expect(page.locator('h1')).toHaveText('Your Go-To Source for AI News, Tools & Guides');
  expect(await (await page.request.get('/robots.txt')).text()).toContain('https://latentink.github.io/sitemap.xml');
 });

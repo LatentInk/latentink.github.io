@@ -3,7 +3,7 @@ title: "Avatar Videos for Business: A Buyer’s Guide"
 description: "Talking-head videos have become a staple of business communication."
 date: "2026-11-16"
 category: "Creative AI"
-image: 17
+image: 25
 draft: false
 ---
 

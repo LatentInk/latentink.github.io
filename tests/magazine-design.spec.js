@@ -1,0 +1,22 @@
+import {test,expect} from '@playwright/test';
+test('category links filter the archive, mobile navigation works, and following uses real RSS',async({page})=>{
+ await page.goto('/');
+ await page.locator('.category-tile').filter({hasText:'AI Agents'}).click();
+ await expect(page).toHaveURL(/topic=Agents/);
+ await expect(page.getByRole('button',{name:'Agents',exact:true})).toHaveAttribute('aria-pressed','true');
+ const categories=await page.locator('.article-card:visible').evaluateAll(nodes=>nodes.map(n=>n.dataset.category));
+ expect(categories.length).toBeGreaterThan(0);expect(categories.every(c=>c==='Agents')).toBe(true);
+ await page.setViewportSize({width:390,height:844});await page.goto('/');
+ const toggle=page.getByRole('button',{name:'Toggle navigation'});
+ await expect(toggle).toBeVisible();await expect(page.locator('.primary-nav')).toBeHidden();
+ await toggle.click();await expect(toggle).toHaveAttribute('aria-expanded','true');
+ await expect(page.locator('.primary-nav')).toBeVisible();
+ await page.keyboard.press('Escape');await expect(toggle).toHaveAttribute('aria-expanded','false');
+ await toggle.click();await page.locator('.primary-nav').getByRole('link',{name:'Blog',exact:true}).click();
+ await expect(page).toHaveURL(/\/blog\/$/);
+ const feedLink=page.locator('.follow-band').getByRole('link',{name:/Subscribe via RSS/});
+ await expect(feedLink).toHaveAttribute('href','/feed.xml');
+ const feed=await page.request.get('/feed.xml');expect(feed.status()).toBe(200);
+ expect(await feed.text()).toContain('<rss version="2.0">');
+ await expect(page.locator('input[type=email]')).toHaveCount(0);
+});

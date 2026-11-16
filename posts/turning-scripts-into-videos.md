@@ -3,7 +3,7 @@ title: "Turning Scripts Into Videos: What to Look for in a Text-to-Video Tool"
 description: "Many marketers sit on a pile of written content: blog posts, newsletters, product descriptions, and scripts."
 date: "2026-11-16"
 category: "Creative AI"
-image: 17
+image: 20
 draft: false
 ---
 
